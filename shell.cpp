@@ -35,8 +35,8 @@ int main () {
       dup2(fd[1], STDOUT_FILENO);
       close(fd[0]);
       close(fd[1]);
-      char* args[] = {const_cast<char*>("ls"), const_cast<char*>("-al"), const_cast<char*>("/"), NULL};
-      execvp("ls", args);
+      //char* args[] = {const_cast<char*>("ls"), const_cast<char*>("-al"), const_cast<char*>("/"), NULL};
+      execvp("ls", cmd1);
       perror("execvp failed (ls)");
       exit(1);
     }
@@ -49,8 +49,8 @@ int main () {
       dup2(fd[0], STDIN_FILENO);
       close(fd[0]);
       close(fd[1]);
-      char* args[] = {const_cast<char*>("tr"), const_cast<char*>("[:lower:]"), const_cast<char*>("[:upper:]"), NULL};
-      execvp("tr", args);
+      //char* args[] = {const_cast<char*>("tr"), const_cast<char*>("[:lower:]"), const_cast<char*>("[:upper:]"), NULL};
+      execvp("tr", cmd2);
       perror("execvp failed (tr)");
       exit(1);
     }
