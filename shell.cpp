@@ -35,7 +35,7 @@ int main () {
       dup2(fd[1], STDOUT_FILENO);
       close(fd[0]);
       close(fd[1]);
-      char* args[] = {const_cast<char*>("ls"), const_cast<char*>("-1"), NULL};
+      char* args[] = {const_cast<char*>("ls"), const_cast<char*>("-al"), const_cast<char*>("/"), NULL};
       execvp("ls", args);
       perror("execvp failed (ls)");
       exit(1);
