@@ -28,7 +28,7 @@ int32_t t_create(fptr foo, int32_t arg1, int32_t arg2)
   volatile int id = -1;
   for (int i = 1; i < NUM_CTX; i++){
     if (contexts[i].state == INVALID || contexts[i].state == DONE){
-      id = 1;
+      id = i;
       break;
     }
   }
@@ -83,7 +83,12 @@ void t_finish()
   uint8_t idx = current_context_idx;
   
   contexts[idx].state = DONE;
-  
+  //free stack
+  if (contexts[idx].context.uc_stack.ss_sp){
+    free(contexts[idx].context.uc_stack.ss_sp);
+    contexts[idx].context.uc_stack.ss_sp = NULL;
+  }
+  //switch to next valid worker
   for (int i = 0; i < NUM_CTX; i++) {
     if (contexts[i].state == VALID) {
       current_context_idx = (uint8_t)i;
