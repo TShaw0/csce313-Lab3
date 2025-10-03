@@ -95,8 +95,14 @@ void t_finish()
       setcontext(&contexts[i].context);
     }
   }
-  
-  // no other workers, switch back to main
+  //no workers left
+  for (int i = 1; i < NUM_CTX; i++) {
+    if (contexts[i].state == DONE && contexts[i].context.uc_stack.ss_sp) {
+      free(contexts[i].context.uc_stack.ss_sp);
+      contexts[i].context.uc_stack.ss_sp = NULL;
+    }
+  }
+  //switch back to main
   current_context_idx = 0;
   setcontext(&contexts[0].context);
   exit(0);
